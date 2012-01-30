@@ -13,6 +13,7 @@ dependencies = {
    "lua >= 5.1",
    "luasocket",
    "luasec",
+   "feedparser"
   -- "mk"
 }
 
@@ -22,10 +23,6 @@ build = {
     ["feedfilter.configdsl"] = "feedfilter/configdsl.lua",
     ["feedfilter.feed"] = "feedfilter/feed.lua",
     ["feedfilter.https"] = "feedfilter/https.lua",
-    ["feedparser"] = "lua-feedparser/feedparser.lua",
-    ["feedparser.dateparser"] = "lua-feedparser/feedparser/dateparser.lua",
-    ["feedparser.url"] = "lua-feedparser/feedparser/url.lua",
-    ["feedparser.XMLElement"] = "lua-feedparser/feedparser/XMLElement.lua",
   },
   copy_directories = { --[["samples", "doc", "tests" ]]},
 }
