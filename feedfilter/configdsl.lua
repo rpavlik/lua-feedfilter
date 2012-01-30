@@ -3,7 +3,6 @@ local filter = require "feedfilter.filter"
 local generation = require "feedfilter.generate"
 
 local verbose = require "feedfilter.verbose"
-cache_dir = "./tmp"
 
 feed = function(self)
 	return FeedConstructor(self)
