@@ -5,9 +5,12 @@ function prependDirToLuaPath() {
 	export LUA_PATH_EXTRA="${dir}?:${dir}?.lua:${dir}?/init.lua:${LUA_PATH_EXTRA}"
 }
 
+(
+	cd $SCRIPTDIR && luarocks make
+) && lua -lluarocks.loader "${SCRIPTDIR}/main.lua"
 #prependDirToLuaPath "${SCRIPTDIR}/lua-feedparser/"
 #prependDirToLuaPath "${SCRIPTDIR}/mk/src/"
 #prependDirToLuaPath "${SCRIPTDIR}/"
 #echo "LUA_PATH_EXTRA is ${LUA_PATH_EXTRA}"
 #  -e "package.path = os.getenv('LUA_PATH_EXTRA') .. package.path"
-lua -lluarocks.loader "${SCRIPTDIR}/main.lua"
+

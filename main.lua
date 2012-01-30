@@ -1,6 +1,5 @@
-#!/usr/bin/env lua -lluarocks.loader
+
 require "std"
-local http = require "socket.http"
 
 require "feedfilter.configdsl"
 
