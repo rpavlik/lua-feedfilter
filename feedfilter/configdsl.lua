@@ -38,7 +38,6 @@ generate = function(args)
 	local newFeed = generation.mergeFeeds(feedArgs, args)
 	local f = assert(io.open(feedArgs.filename, 'w'))
 	local output = generation.generateFeed(newFeed)
-	print(output)
 	f:write(output)
 	f:close()
 end
