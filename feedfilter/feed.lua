@@ -22,5 +22,6 @@ end
 local feedmt = { __index = feedproto }
 
 return function(self)
+	verbose( ("Constructing feed %s"):format(self.url))
 	return setmetatable(self, feedmt)
 end

@@ -17,6 +17,7 @@ local createTransformFunction = function(transformName, constructor, membername)
 		assert(a[membername], membername .. " must be non-nil")
 		local member = a[membername]
 		local result = {}
+		verbose( ("Applying %s to %d children"):format(transformName, #a) )
 		for _, v in ipairs(a) do
 			table.insert(result, constructor{source = v, [membername] = member})
 		end
