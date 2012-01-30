@@ -28,5 +28,10 @@ build = {
     ["feedfilter.generate"] = "feedfilter/generate.lua",
     ["feedfilter.https"] = "feedfilter/https.lua",
   },
+  install = {
+    bin = {
+      "lua-feedfilter"
+    }
+  },
   copy_directories = { --[["samples", "doc", "tests" ]]},
 }
