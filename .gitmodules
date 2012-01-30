@@ -1,3 +1,6 @@
 [submodule "lua-feedparser"]
 	path = lua-feedparser
 	url = git://github.com/jdesgats/lua-feedparser.git
+[submodule "mk"]
+	path = mk
+	url = git://github.com/keplerproject/mk.git
