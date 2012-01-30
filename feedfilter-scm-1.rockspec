@@ -1,12 +1,12 @@
 package = "feedfilter"
 version = "scm-1"
 source = {
-   url = "http://..." -- We don't have one yet
+   url = "git://github.com/rpavlik/lua-feedfilter.git"
 }
 description = {
    summary = "Lua feed aggregator and filter.",
    detailed = [[ TODO ]],
-   homepage = "http://...", -- We don't have one yet
+   homepage = "https://github.com/rpavlik/lua-feedfilter",
 --   license = "MIT/X11" -- or whatever you like
 }
 dependencies = {
