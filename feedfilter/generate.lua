@@ -27,39 +27,39 @@ end
 
 require "cosmo"
 
-local atomTemplate = [=[
+local atomTemplate = [[
 <?xml version="1.0" encoding="utf-8"?>
  
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title>$xmlencode{$title}</title>
     <id>$xmlencode{$id}</id>
     <updated>$updated</updated>
-    $if{ $author }[[
+    $if{ $author }[=[
     <author>
         <name>$xmlencode{$author|name}</name>
         <email>$xmlencode{$author|email}</email>
     </author>
-    ]],[[]]
-$entries[[
+    ]=]
+$entries[=[
     <entry>
         <title>$xmlencode{$title}</title>
         <link href="$xmlencode{$link}" />
         <id>$xmlencode{$id}</id>
         <updated>$xmlencode{$updated}</updated>
-        <summary>$xmlencode{$summary}</summary>
-        <content>$xmlencode{$content}</content>
+        $if{$summary}[==[<summary>$xmlencode{$summary}</summary>]==]
+        $if{$content}[==[$if{$contentHTML}[===[<content type="html">]===],[===[<content>]===]$xmlencode{$content}</content>]==]
     </entry>
-]]
+]=]
  
 </feed>
 
-]=]
+]]
 
 
 local generateFeed = function(newFeed)
 	require "LuaXml"
 	local optionallyEncode = function(val)
-		if val[1] ~= nil then
+		if val[1] ~= nil and val[1] ~= "nil" then
 			return xml.encode(val[1])
 		end
 	end
