@@ -2,30 +2,13 @@
 
 require "luarocks.loader"
 
-require "std"
-
 require "feedfilter.configdsl"
 
-local f = feed{
-	url = "https://github.com/rpavlik.atom",
-	name = "Ryan's GitHub activity"
-}
+if arg[1] == nil then
+	arg[1] = "config.lua"
+end
 
-local results = f:get()
---print(results)
-print(#(results.entries))
-
-local f2 = filter{
-	predicate = function(entry)
-		return entry.title:find("pull")
-	end,
-	f
-}
-generate{
-	title = "My awesome feed",
-	filename = "whatever.xml",
-	baseUrl = "http://localhost/",
-	f2,
-}
-
---print(#(filtered.entries))
+for i, fn in ipairs(arg) do
+	print( ("Processing config file #%d: %s"):format(i, fn))
+	dofile(fn)
+end
