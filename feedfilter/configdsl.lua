@@ -1,6 +1,8 @@
 local FeedConstructor = require "feedfilter.feed"
 local filter = require "feedfilter.filter"
 local generation = require "feedfilter.generate"
+
+local verbose = require "feedfilter.verbose"
 cache_dir = "./tmp"
 
 feed = function(self)
@@ -35,9 +37,15 @@ generate = function(args)
 	if not feedArgs.id then
 		feedArgs.id = feedArgs.selfUrl
 	end
+
+	verbose("Merging feeds")
 	local newFeed = generation.mergeFeeds(feedArgs, args)
-	local f = assert(io.open(feedArgs.filename, 'w'))
+
+	verbose("Generating new feed")
 	local output = generation.generateFeed(newFeed)
+
+	verbose("Writing output to", feedArgs.filename)
+	local f = assert(io.open(feedArgs.filename, 'w'))
 	f:write(output)
 	f:close()
 end

@@ -27,6 +27,7 @@ build = {
     ["feedfilter.filter"] = "feedfilter/filter.lua",
     ["feedfilter.generate"] = "feedfilter/generate.lua",
     ["feedfilter.https"] = "feedfilter/https.lua",
+    ["feedfilter.verbose"] = "feedfilter/verbose.lua",
   },
   install = {
     bin = {
