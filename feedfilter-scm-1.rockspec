@@ -13,7 +13,8 @@ dependencies = {
    "lua >= 5.1",
    "luasocket",
    "luasec",
-   "feedparser"
+   "feedparser",
+   "cosmo"
   -- "mk"
 }
 
