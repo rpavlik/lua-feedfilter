@@ -17,7 +17,7 @@ local createTransformFunction = function(transformName, constructor, membername)
 		assert(a[membername], membername .. " must be non-nil")
 		local member = a[membername]
 		local result = {}
-		verbose( ("Applying %s to %d children"):format(transformName, #a) )
+		verbose( ("Constructing %s with %d children"):format(transformName, #a) )
 		for _, v in ipairs(a) do
 			table.insert(result, constructor{source = v, [membername] = member})
 		end
@@ -42,14 +42,15 @@ generate = function(args)
 		feedArgs.id = feedArgs.selfUrl
 	end
 
-	verbose("Merging feeds")
+	verbose(("Retrieving and merging %d feeds"):format(#args))
 	local newFeed = generation.mergeFeeds(feedArgs, args)
 
-	verbose("Generating new feed")
+	verbose(("Generating new feed with %d entries"):format(#newFeed.entries))
 	local output = generation.generateFeed(newFeed)
 
 	verbose("Writing output to", feedArgs.filename)
 	local f = assert(io.open(feedArgs.filename, 'w'))
 	f:write(output)
 	f:close()
+	verbose("")
 end
