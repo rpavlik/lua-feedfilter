@@ -45,7 +45,7 @@ end)
 local mapconstructor = createEntryIterativeApplicationConstructor(function(self, entries, entry, origResults)
 	local result = self.mapfunc(entry, origResults)
 	if result ~= nil then
-		table.insert(entries, entry)
+		table.insert(entries, result)
 	end
 end)
 
