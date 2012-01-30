@@ -1,3 +1,6 @@
+#!/usr/bin/env lua
+
+require "luarocks.loader"
 
 require "std"
 
