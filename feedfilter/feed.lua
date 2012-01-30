@@ -8,9 +8,9 @@ feedproto.get = function(self)
 	local https = require("feedfilter.https")
 	local b, c, h = https.request(self.url)
 	if c < 200 or c > 299 then
-		error(("Failed getting %s - code %d":format(self.url, c)))
+		error(("Failed getting %s - code %d"):format(self.url, c))
 	end
-	return ret = feedparser.parse(b)
+	return feedparser.parse(b)
 end
 
 local feedmt = { __index = feedproto }

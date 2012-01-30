@@ -77,7 +77,7 @@ local function wrapped_request(arg1, arg2)
         request.source = ltn12.source.string(arg2)
     end
     local b, c, h = handleAdvancedRequest(request)
-    return table.concat(result_table), c, h)
+    return table.concat(result_table), c, h
 end
 
 return { ["create"] = create, ["request"] = wrapped_request }
