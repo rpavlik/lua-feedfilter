@@ -1,20 +1,21 @@
 
 
-local mergeFeeds = function(args)
+local mergeFeeds = function(feedData, feeds)
 	local newFeed = {--[[
 		id = args.id,
 		title = args.title,
 	]]
 		entries = {}
 	}
-	for k, v in pairs(args) do
+	for k, v in pairs(feedData) do
 		if type(k) ~= "number" or k > #args or k < 1 then
 			newFeed[k] = v
 		end
 	end
 	local newEntries = {}
-	for _, feed in ipairs(args) do
-		for _, entry in ipairs(feed.entries) do
+	for _, feed in ipairs(feeds) do
+		local feedData = feed:get()
+		for _, entry in ipairs(feedData.entries) do
 			table.insert(newFeed.entries, entry)
 		end
 	end
@@ -31,14 +32,14 @@ local atomTemplate = [=[
  
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title>$title</title>
-    <id>%id</id>
+    <id>$id</id>
     <updated>$updated</updated>
-    <!--
+    $if{ $author }[[
     <author>
-        <name>John Doe</name>
-        <email>johndoe@example.com</email>
+        <name>$author|name</name>
+        <email>$author|email</email>
     </author>
-    -->
+    ]],[[]]
 $entries[[
     <entry>
         <title>$title</title>
@@ -46,6 +47,7 @@ $entries[[
         <id>$id</id>
         <updated>$updated</updated>
         <summary>$summary</summary>
+        <content>$content</content>
     </entry>
 ]]
  
@@ -54,7 +56,8 @@ $entries[[
 ]=]
 
 local generateFeed = function(newFeed)
-	return cosmo.fill(atomTemplate, newFeed)
+	local myInput = setmetatable({["if"] = cosmo.cif}, {__index=newFeed})
+	return cosmo.fill(atomTemplate, myInput)
 end
 
 return {

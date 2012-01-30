@@ -3,28 +3,49 @@
 local filterproto = setmetatable({}, {__index = function(self, key) return self.source[key] end})
 
 -- Create a wrapper for "get"
-filterproto.get = function(self)
-	assert(self.predicate ~= nil, "predicate must be non-nil for a filter")
-	local origResults = self.source:get()
-	local results = {}
-	for k, v in pairs(origResults) do
-		if k == "entries" then
-			results.entries = {}
-			for _, entry in ipairs(v) do
-				if self.predicate(entry) then
-					table.insert(results.entries, entry)
+
+
+local createEntryIterativeApplicationConstructor = function(action)
+	local proto = {}
+	proto.get = function(self)
+		local origResults = self.source:get()
+		local results = {}
+		for k, v in pairs(origResults) do
+			if k == "entries" then
+				results.entries = {}
+				for _, entry in ipairs(v) do
+					action(self, results.entries, entry, origResults)
 				end
+			else
+				results[k] = v
 			end
-		else
-			results[k] = v
 		end
+		return results
 	end
-	return results
+	local mt = { __index = proto }
+	return function(self)
+		assert(self.source, "source must be non-nil")
+		return setmetatable(self, mt)
+	end
 end
+					
 
 local filtermt = { __index = filterproto }
+     
+local filterconstructor = createEntryIterativeApplicationConstructor(function(self, entries, entry, origResults)
+	if self.predicate(entry) then
+		table.insert(entries, entry)
+	end
+end)
 
-return function(self)	
-	assert(self.source ~= nil, "source must be non-nil for a filter")
-	return setmetatable(self, filtermt)
-end
+local mapconstructor = createEntryIterativeApplicationConstructor(function(self, entries, entry, origResults)
+	local result = self.mapfunc(entry, origResults)
+	if result ~= nil then
+		table.insert(entries, entry)
+	end
+end)
+
+return {
+	["newMap"] = mapconstructor,
+	["newFilter"] = filterconstructor
+}
