@@ -31,23 +31,23 @@ local atomTemplate = [=[
 <?xml version="1.0" encoding="utf-8"?>
  
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<title>$title</title>
-    <id>$id</id>
+	<title>$xmlencode{$title}</title>
+    <id>$xmlencode{$id}</id>
     <updated>$updated</updated>
     $if{ $author }[[
     <author>
-        <name>$author|name</name>
-        <email>$author|email</email>
+        <name>$xmlencode{$author|name}</name>
+        <email>$xmlencode{$author|email}</email>
     </author>
     ]],[[]]
 $entries[[
     <entry>
-        <title>$title</title>
-        <link href="$link" />
-        <id>$id</id>
-        <updated>$updated</updated>
-        <summary>$summary</summary>
-        <content>$content</content>
+        <title>$xmlencode{$title}</title>
+        <link href="$xmlencode{$link}" />
+        <id>$xmlencode{$id}</id>
+        <updated>$xmlencode{$updated}</updated>
+        <summary>$xmlencode{$summary}</summary>
+        <content>$xmlencode{$content}</content>
     </entry>
 ]]
  
@@ -55,8 +55,15 @@ $entries[[
 
 ]=]
 
+
 local generateFeed = function(newFeed)
-	local myInput = setmetatable({["if"] = cosmo.cif}, {__index=newFeed})
+	require "LuaXml"
+	local optionallyEncode = function(val)
+		if val[1] ~= nil then
+			return xml.encode(val[1])
+		end
+	end
+	local myInput = setmetatable({["if"] = cosmo.cif, ["xmlencode"] = optionallyEncode}, {__index=newFeed})
 	return cosmo.fill(atomTemplate, myInput)
 end
 

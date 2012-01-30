@@ -14,7 +14,8 @@ dependencies = {
    "luasocket",
    "luasec",
    "feedparser",
-   "cosmo"
+   "cosmo",
+   "luaxml"
   -- "mk"
 }
 
