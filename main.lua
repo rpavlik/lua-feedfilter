@@ -12,4 +12,14 @@ local f = feed{
 }
 
 local results = f:get()
-print(results)
+--print(results)
+print(#(results.entries))
+
+local filtered = filter{
+	predicate = function(entry)
+		return entry.title:find("pull")
+	end,
+	f
+}:get()
+
+print(#(filtered.entries))
