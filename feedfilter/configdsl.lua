@@ -5,7 +5,11 @@ local generation = require "feedfilter.generate"
 local verbose = require "feedfilter.verbose"
 
 feed = function(self)
-	return FeedConstructor(self)
+	if type(self) == "string" then
+		return FeedConstructor({url = self})
+	else
+		return FeedConstructor(self)
+	end
 end
 
 local createTransformFunction = function(transformName, constructor, membername)
