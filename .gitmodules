@@ -1,0 +1,3 @@
+[submodule "lua-feedparser"]
+	path = lua-feedparser
+	url = git://github.com/jdesgats/lua-feedparser.git
