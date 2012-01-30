@@ -23,6 +23,8 @@ build = {
   modules = {
     ["feedfilter.configdsl"] = "feedfilter/configdsl.lua",
     ["feedfilter.feed"] = "feedfilter/feed.lua",
+    ["feedfilter.filter"] = "feedfilter/filter.lua",
+    ["feedfilter.generate"] = "feedfilter/generate.lua",
     ["feedfilter.https"] = "feedfilter/https.lua",
   },
   copy_directories = { --[["samples", "doc", "tests" ]]},
