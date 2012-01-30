@@ -8,6 +8,9 @@ local filterproto = setmetatable({}, {__index = function(self, key) return self.
 local createEntryIterativeApplicationConstructor = function(action)
 	local proto = {}
 	proto.get = function(self)
+		if rawget(self, "cachedResults") ~= nil then
+			return self.cachedResults
+		end
 		local origResults = self.source:get()
 		local results = {}
 		for k, v in pairs(origResults) do
@@ -20,6 +23,7 @@ local createEntryIterativeApplicationConstructor = function(action)
 				results[k] = v
 			end
 		end
+		self.cachedResults = results
 		return results
 	end
 	local mt = { __index = proto }
