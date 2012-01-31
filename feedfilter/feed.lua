@@ -1,5 +1,5 @@
 
-require "lua-feedparser.feedparser"
+require "feedparser"
 local verbose = require "feedfilter.verbose"
 
 local feednum = 1
