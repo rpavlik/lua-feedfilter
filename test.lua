@@ -1,3 +1,8 @@
+#!/usr/bin/env lua
+
+require "luarocks.loader"
+require "std"
+require "feedfilter.configdsl"
 
 local f = feed{
 	url = "https://github.com/rpavlik.atom",
@@ -5,7 +10,11 @@ local f = feed{
 }
 
 local results = f:get()
-print(results.entries)
+print("Format:", results.format)
+print("Version:", results.version)
+print()
+print(results.entries[1])
+print(results.feed)
 print(#(results.entries))
 
 local f2 = filter{
