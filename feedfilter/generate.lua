@@ -18,7 +18,7 @@ local mergeFeeds = function(feedData, feeds)
 			table.insert(newFeed.entries, entry)
 		end
 	end
-	table.sort(newFeed.entries, function (a, b) return a.updated_parsed < b.updated_parsed end)
+	table.sort(newFeed.entries, function (a, b) return a.updated_parsed > b.updated_parsed end)
 	local newest = newFeed.entries[#(newFeed.entries)]
 	newFeed.updated = newest.updated
 	return newFeed
