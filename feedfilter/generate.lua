@@ -12,7 +12,6 @@ local mergeFeeds = function(feedData, feeds)
 			newFeed[k] = v
 		end
 	end
-	local newEntries = {}
 	for _, feed in ipairs(feeds) do
 		local feedData = feed:get()
 		for _, entry in ipairs(feedData.entries) do
