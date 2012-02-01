@@ -91,3 +91,15 @@ generate = function(args)
 	f:close()
 	verbose("")
 end
+
+---
+-- A pre-made map for feeds that provide HTML in their content.
+-- lua-feedparser seems to drop any reference to `<content type="html">`,
+-- but this will trigger putting it back in the generated Atom feed.
+markContentAsHTML = function(arg)
+	arg.mapfunc = function(entry, feed)
+		entry.contentHTML = true
+		return entry
+	end
+	return map(arg)
+end
