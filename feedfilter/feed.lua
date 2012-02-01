@@ -15,11 +15,11 @@ feedproto.get = function(self)
 		local b, c, h = https.request(self.url)
 		if type(c) ~= "number" or c < 200 or c > 299 then
 			print(("ERROR: Skipping feed %s due to failure during request - code '"):format(self.url) .. c .. "'")
-			return { feed = {}, entries = {} }
+			return setmetatable({ feed = {}, entries = {} }, {__index = self})
 		end
 		self.cachedBody = b
 	end
-	return feedparser.parse(self.cachedBody)
+	return setmetatable(feedparser.parse(self.cachedBody), {__index = self})
 end
 
 local feedmt = { __index = feedproto }
