@@ -13,8 +13,9 @@ feedproto.get = function(self)
 		verbose(("Retrieving feed number %d"):format(self.feednum))
 		local https = require("feedfilter.https")
 		local b, c, h = https.request(self.url)
-		if c < 200 or c > 299 then
-			error(("Failed getting %s - code %d"):format(self.url, c))
+		if type(c) ~= "number" or c < 200 or c > 299 then
+			print(("ERROR: Skipping feed %s due to failure during request - code '"):format(self.url) .. c .. "'")
+			return { feed = {}, entries = {} }
 		end
 		self.cachedBody = b
 	end
