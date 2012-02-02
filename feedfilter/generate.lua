@@ -15,7 +15,11 @@ local mergeFeeds = function(feedData, feeds)
 	for _, feed in ipairs(feeds) do
 		local feedData = feed:get()
 		for _, entry in ipairs(feedData.entries) do
-			table.insert(newFeed.entries, entry)
+			if type(entry.updated_parsed) ~= "number" then
+				print("WARNING: Skipping entry with invalid updated_parsed field:", entry.updated_parsed, "in feed", feedData.url)
+			else
+				table.insert(newFeed.entries, entry)
+			end
 		end
 	end
 	table.sort(newFeed.entries, function (a, b) return a.updated_parsed > b.updated_parsed end)
