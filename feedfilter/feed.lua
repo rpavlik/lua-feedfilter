@@ -20,7 +20,7 @@ feedproto.get = function(self)
 		local b, c, h = https.request(self.url)
 		if type(c) ~= "number" or c < 200 or c > 299 then
 			print(("ERROR: Skipping feed %s due to failure during request - code '"):format(self.url) .. c .. "'")
-			return setmetatable({ feed = {}, entries = {} }, {__index = self})
+			return createDummyFeed(self)
 		end
 		self.cachedBody = b
 	end
