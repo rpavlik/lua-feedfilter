@@ -12,6 +12,12 @@ local createDummyFeed = function(self)
 	return setmetatable({ feed = {}, entries = {} }, {__index = self})
 end
 
+local checkFieldHTML = function(entry, fieldname)
+	if entry[fieldname] and entry[fieldname]:find("%b<>") then
+		-- TODO improve this heuristic to figure out if it's HTML
+		entry[fieldname.."HTML"] = true
+	end
+end
 feedproto.get = function(self)
 	if self.cachedBody == nil then
 		assert(self.url ~= nil, "URL must be provided!")
@@ -29,7 +35,10 @@ feedproto.get = function(self)
 		print("ERROR: Could not parse response from", self.url, err)
 		return createDummyFeed(self)
 	end
-
+	for _, entry in ipairs(parsed.entries) do
+		checkFieldHTML(entry, "content")
+		checkFieldHTML(entry, "summary")
+	end
 	return setmetatable(parsed, {__index = self})
 end
 
