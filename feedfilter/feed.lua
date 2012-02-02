@@ -7,6 +7,11 @@ local feednum = 1
 local feedproto = {}
 
 feedproto.frequency = 60
+
+local createDummyFeed = function(self)
+	return setmetatable({ feed = {}, entries = {} }, {__index = self})
+end
+
 feedproto.get = function(self)
 	if self.cachedBody == nil then
 		assert(self.url ~= nil, "URL must be provided!")
@@ -19,7 +24,13 @@ feedproto.get = function(self)
 		end
 		self.cachedBody = b
 	end
-	return setmetatable(feedparser.parse(self.cachedBody), {__index = self})
+	local parsed, err = feedparser.parse(self.cachedBody)
+	if type(parsed) ~= "table" then
+		print("ERROR: Could not parse response from", self.url, err)
+		return createDummyFeed(self)
+	end
+
+	return setmetatable(parsed, {__index = self})
 end
 
 local feedmt = { __index = feedproto }
