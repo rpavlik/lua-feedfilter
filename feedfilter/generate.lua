@@ -49,7 +49,7 @@ $entries[=[
         <link href="$xmlencode{$link}" />
         <id>$xmlencode{$id}</id>
         <updated>$xmlencode{$updated}</updated>
-        $if{$summary}[==[<summary>$xmlencode{$summary}</summary>]==]
+        $if{$summary}[==[$if{$summaryHTML}[===[<summary type="html">]===],[===[<summary>]===]$xmlencode{$summary}</summary>]==]
         $if{$content}[==[$if{$contentHTML}[===[<content type="html">]===],[===[<content>]===]$xmlencode{$content}</content>]==]
     </entry>
 ]=]
