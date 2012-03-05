@@ -82,6 +82,14 @@ generate = function(args)
 	verbose(("Retrieving and merging %d feeds"):format(#args))
 	local newFeed = generation.mergeFeeds(feedArgs, args)
 
+	if feedArgs.entrylimit and #newFeed.entries > feedArgs.entrylimit then
+		local toremove = #newFeed.entries - feedArgs.entrylimit
+		verbose(("Removing the oldest %d entries to satisfy entry limit"):format(toremove))
+		for i=1, toremove do
+			table.remove(newFeed.entries)
+		end
+	end
+
 	verbose(("Generating new feed with %d entries"):format(#newFeed.entries))
 	local output = generation.generateFeed(newFeed)
 
