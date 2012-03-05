@@ -49,7 +49,7 @@ require "cosmo"
 
 local atomTemplate = [[
 <?xml version="1.0" encoding="utf-8"?>
- 
+
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title>$xmlencode{$title}</title>
     <id>$xmlencode{$id}</id>
@@ -70,7 +70,7 @@ $entries[=[
         $if{$content}[==[$if{$contentHTML}[===[<content type="html">]===],[===[<content>]===]$xmlencode{$content}</content>]==]
     </entry>
 ]=]
- 
+
 </feed>
 
 ]]
