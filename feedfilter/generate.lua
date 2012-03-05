@@ -1,4 +1,21 @@
 
+local entrymt = {}
+local equiv = {}
+local initialequiv = {
+	updated_parsed = "published_parsed",
+	updated = "published",
+}
+for k, v in pairs(initialequiv) do
+	equiv[k] = v
+	equiv[v] = k
+end
+
+function entrymt:__index(self, key)
+	if equiv[key] and rawget(self, equiv[key]) then
+		self[key] = rawget(self, equiv[key])
+		return rawget(self, equiv[key])
+	end
+end
 
 local mergeFeeds = function(feedData, feeds)
 	local newFeed = {--[[
