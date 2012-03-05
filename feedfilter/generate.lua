@@ -32,6 +32,7 @@ local mergeFeeds = function(feedData, feeds)
 	for _, feed in ipairs(feeds) do
 		local feedData = feed:get()
 		for _, entry in ipairs(feedData.entries) do
+			setmetatable(entry, entrymt)
 			if type(entry.updated_parsed) ~= "number" then
 				print("WARNING: Skipping entry with invalid updated_parsed field:", entry.updated_parsed, "in feed", feedData.url)
 			else
